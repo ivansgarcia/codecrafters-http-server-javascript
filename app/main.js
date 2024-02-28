@@ -1,4 +1,6 @@
 const net = require('net');
+const fs = require('fs');
+const path = require('path');
 
 const CRLF = '\r\n';
 
@@ -15,6 +17,11 @@ const server = net.createServer((socket) => {
         }
         if (args == '/user-agent') {
             socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + userAgent.length + CRLF + CRLF + userAgent)
+        }
+        if (args.startsWith('/files/')) {
+            const filename = args.slice('/files/'.length, args.length);
+            // const filePath = path.resolve(args)
+            console.log(process.argv[3]);
         }
         else if (args == '/') {
             socket.write('HTTP/1.1 200 OK' + CRLF + CRLF);
