@@ -11,6 +11,9 @@ const server = net.createServer((socket) => {
         if (args.split('/')[1] == 'echo') {
             socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.split('/')[2].length + CRLF + CRLF + args.split('/')[2]);
         }
+        else if (args == '/') {
+            socket.write('HTTP/1.1 200 OK' + CRLF + CRLF);
+        }
         else {
             socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
         }
