@@ -4,8 +4,8 @@ const CRLF = '\r\n';
 
 const server = net.createServer((socket) => {
     socket.on('data', (data) => {
-        console.log('data', data.toString());
         const stringData = data.toString().split(CRLF);
+        console.log('data', stringData);
         const requestType = stringData[1].split(' ')[1];
         const path = stringData[1].split(' ')[2];
         console.log(path);
