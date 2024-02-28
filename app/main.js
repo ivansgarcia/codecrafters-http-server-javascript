@@ -6,8 +6,8 @@ const server = net.createServer((socket) => {
     socket.on('data', (data) => {
         const stringData = data.toString().split(CRLF);
         const requestType = stringData[1].split(' ')[1];
-        console.log(stringData[1].split(' '));
-        const path = stringData[1].split(' ')[2];
+        console.log(stringData[0].split(' '));
+        const path = stringData[0].split(' ')[2];
         console.log('path', path);
         console.log(path);
         if (path == '/') {
