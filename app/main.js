@@ -8,8 +8,8 @@ const server = net.createServer((socket) => {
         console.log('DATA: ', dataArray);
         const requestType = dataArray[0].split(' ')[0];
         const args = dataArray[0].split(' ')[1];
-        if (args.split('/')[1] == 'echo') {
-            socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.split('/')[2].length + CRLF + CRLF + args.split('/')[2]);
+        if (args.slice(0, 6) == '/echo/') {
+            socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.slice(6, args.length).length + CRLF + CRLF + args.slice(6, args.length));
         }
         else if (args == '/') {
             socket.write('HTTP/1.1 200 OK' + CRLF + CRLF);
