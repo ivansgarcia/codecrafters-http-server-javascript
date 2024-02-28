@@ -3,7 +3,8 @@ const net = require('net');
 const CRLF = '\r\n';
 
 const server = net.createServer((socket) => {
-    socket.on('data', () => {
+    socket.on('data', (data) => {
+        console.log(data);
         socket.write('HTTP/1.1 200 OK' + CRLF + CRLF);
     })
     socket.on('close', () => {
