@@ -4,7 +4,7 @@ const CRLF = '\r\n';
 
 const server = net.createServer((socket) => {
     socket.on('data', (data) => {
-        console.log(data);
+        console.log('data', data);
         socket.write('HTTP/1.1 200 OK' + CRLF + CRLF);
     })
     socket.on('close', () => {
