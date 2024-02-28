@@ -10,10 +10,10 @@ const server = net.createServer((socket) => {
         const args = dataArray[0].split(' ')[1];
         // console.log(args);
         const userAgent = dataArray[2].split(' ')[1]
-        if (args.slice(0, 6) == '/echo/') {
-            socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.slice(6, args.length).length + CRLF + CRLF + args.slice(6, args.length));
+        if (args.startsWith('/echo/')) {
+            socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.slice('/echo/'.length, args.length).length + CRLF + CRLF + args.slice('/echo/'.length, args.length));
         }
-        if (args.slice(0, 11) == '/user-agent') {
+        if (args == '/user-agent') {
             socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + userAgent.length + CRLF + CRLF + userAgent)
         }
         else if (args == '/') {
