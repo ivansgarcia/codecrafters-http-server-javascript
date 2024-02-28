@@ -4,14 +4,12 @@ const CRLF = '\r\n';
 
 const server = net.createServer((socket) => {
     socket.on('data', (data) => {
-        const stringData = data.toString().split(CRLF);
-        const requestType = stringData[1].split(' ')[1];
-        console.log(stringData[0].split(' '));
-        const path = stringData[0].split(' ')[1];
-        console.log('path', path);
-        console.log(path);
-        if (path == '/') {
-            socket.write('HTTP/1.1 200 OK' + CRLF + CRLF);
+        const dataArray = data.toString().split(CRLF);
+        console.log('DATA: ', dataArray);
+        const requestType = stringData[0].split(' ')[0];
+        const args = stringData[0].split(' ')[1];
+        if (args.split('/')[1] == 'echo') {
+            socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.split('/')[2].length + CRLF + CRLF + args.split('/')[2]);
         }
         else {
             socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
