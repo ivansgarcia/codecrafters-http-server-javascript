@@ -8,7 +8,7 @@ const server = net.createServer((socket) => {
         console.log('DATA: ', dataArray);
         const requestType = dataArray[0].split(' ')[0];
         const args = dataArray[0].split(' ')[1];
-        console.log(args);
+        // console.log(args);
         const userAgent = dataArray[2].split(' ')[1]
         if (args.slice(0, 6) == '/echo/') {
             socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + args.slice(6, args.length).length + CRLF + CRLF + args.slice(6, args.length));
