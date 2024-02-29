@@ -7,7 +7,6 @@ const CRLF = '\r\n';
 const server = net.createServer((socket) => {
     socket.on('data', (data) => {
         const dataArray = data.toString().split(CRLF);
-        console.log('ARGS: ', process.argv);
         console.log('DATA: ', dataArray);
         const requestType = dataArray[0].split(' ')[0];
         const args = dataArray[0].split(' ')[1];
@@ -72,9 +71,12 @@ const server = net.createServer((socket) => {
         }
         if (requestType == 'POST') {
             if (args.startsWith('/files/')) {
+                const fileContent = dataArray[6];
                 const fileName = args.slice('/files/'.length);
                 const filePath = path.resolve(process.argv[3], fileName);
-                // fs.writeFileSync()
+                fs.writeFileSync(fileContent);
+                socket.write('HTTP/1.1 201 CREATED' + CRLF + CRLF);
+                socket.end();
             }
         }
         else {
