@@ -1,38 +1,17 @@
-[![progress-banner](https://backend.codecrafters.io/progress/http-server/fd338b17-9ff1-4dec-a829-c18bd20f9953)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+# NodeJS simple HTTP server implementation
 
-This is a starting point for JavaScript solutions to the
-["Build Your Own HTTP server" Challenge](https://app.codecrafters.io/courses/http-server/overview).
+Creates a http server that responds to GET and POST request.
 
-[HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) is the
-protocol that powers the web. In this challenge, you'll build a HTTP/1.1 server
-that is capable of serving multiple clients.
+## Requests:
+   GET http://localhost:4221/ : responds with 200 OK status.
+   GET http://localhost:4221/echo/sometext : responds 'sometext' in the body with 200 OK status.
+   GET http://localhost:4221/user-agent : responds with the user-agent value (200 OK).
 
-Along the way you'll learn about TCP servers,
-[HTTP request syntax](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html),
-and more.
+   For testing the read write files execute the app/main.js with --directory flag:
+   (example)   node app/main.js --directory ./data 
+   in this case data folder must exists.
+      
+   GET http://localhost:4221/files/file.txt : reads the content of file.txt and responds with it in the body (200 OK).
+   POST http://localhost:4221/files/file.txt : copies the content of the request body in file.txt (201 CREATED).
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
-
-# Passing the first stage
-
-The entry point for your HTTP server implementation is in `app/main.js`. Study
-and uncomment the relevant code, and push your changes to pass the first stage:
-
-```sh
-git add .
-git commit -m "pass 1st stage" # any msg
-git push origin master
-```
-
-Time to move on to the next stage!
-
-# Stage 2 & beyond
-
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `node (18)` installed locally
-1. Run `./your_server.sh` to run your program, which is implemented in
-   `app/main.js`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+   In other cases responds with 404 NOT FOUND.
