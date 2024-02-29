@@ -2,6 +2,8 @@ const net = require('net');
 const fs = require('fs');
 const path = require('path');
 
+const PORT = 4221;
+
 const CRLF = '\r\n';
 
 const server = net.createServer((socket) => {
@@ -90,4 +92,4 @@ const server = net.createServer((socket) => {
 });
 
 console.log('PROCESS.ARGV: ', process.argv);
-server.listen(4221, 'localhost');
+server.listen(PORT, 'localhost');
