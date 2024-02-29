@@ -74,7 +74,7 @@ const server = net.createServer((socket) => {
                 const fileContent = dataArray[6];
                 const fileName = args.slice('/files/'.length);
                 const filePath = path.resolve(process.argv[3], fileName);
-                fs.writeFileSync(fileContent);
+                fs.writeFileSync(filePath, fileContent);
                 socket.write('HTTP/1.1 201 CREATED' + CRLF + CRLF);
                 socket.end();
             }
