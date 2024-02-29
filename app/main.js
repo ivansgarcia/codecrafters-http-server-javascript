@@ -27,7 +27,7 @@ const server = net.createServer((socket) => {
             const filePath = path.resolve(process.argv[3], filename);
             if (fs.existsSync(filePath)) {
                 const fileContent = fs.readFileSync(filePath);
-                socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: octet-stream' + CRLF + 'Content-Length: ' + fileContent.length + CRLF + CRLF + fileContent);
+                socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: application/octet-stream' + CRLF + 'Content-Length: ' + fileContent.length + CRLF + CRLF + fileContent);
                 return socket.end();
             } else {
                 socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
