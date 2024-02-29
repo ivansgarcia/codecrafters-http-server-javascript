@@ -48,19 +48,18 @@ const server = net.createServer((socket) => {
                 const fileName = args.slice('/files/'.length, args.length);
                 const filePath = path.resolve(process.argv[3], fileName);
                 if (fs.existsSync(filePath)) {
-                    try {const fileContent = fs.readFileSync(filePath);
-                        socket.write(
-                            'HTTP/1.1 200 OK' +
-                                CRLF +
-                                'Content-Type: application/octet-stream' +
-                                CRLF +
-                                'Content-Length: ' +
-                                fileContent.length +
-                                CRLF +
-                                CRLF +
-                                fileContent
-                        );
-                    } catch (e) { console.log('ERROR AL ESCRIBIR ARCHIVO: ', e) }
+                    const fileContent = fs.readFileSync(filePath);
+                    socket.write(
+                        'HTTP/1.1 200 OK' +
+                            CRLF +
+                            'Content-Type: application/octet-stream' +
+                            CRLF +
+                            'Content-Length: ' +
+                            fileContent.length +
+                            CRLF +
+                            CRLF +
+                            fileContent
+                    );
                     return socket.end();
                 } else {
                     socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
@@ -81,8 +80,7 @@ const server = net.createServer((socket) => {
                 socket.write('HTTP/1.1 201 CREATED' + CRLF + CRLF);
                 socket.end();
             }
-        }
-        else {
+        } else {
             socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
         }
     });
