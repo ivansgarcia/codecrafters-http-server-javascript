@@ -30,7 +30,9 @@ const server = net.createServer((socket) => {
                 return socket.end();
             }
             if (args == '/user-agent') {
-                const userAgent = (dataArray.find(data => data.startsWith('User-Agent'))).slice('User-Agent: '.length);
+                const userAgent = dataArray
+                    .find((data) => data.startsWith('User-Agent'))
+                    .slice('User-Agent: '.length);
                 socket.write(
                     'HTTP/1.1 200 OK' +
                         CRLF +
@@ -49,7 +51,8 @@ const server = net.createServer((socket) => {
                 const filePath = path.resolve(process.argv[3], fileName);
                 if (fs.existsSync(filePath)) {
                     const fileContent = fs.readFileSync(filePath);
-                    socket.write(
+                    try {
+                        socket.write(
                         'HTTP/1.1 200 OK' +
                             CRLF +
                             'Content-Type: application/octet-stream' +
@@ -59,7 +62,11 @@ const server = net.createServer((socket) => {
                             CRLF +
                             CRLF +
                             fileContent
-                    );
+                        );
+                    } catch (e) {
+                        console.log(e);
+                        socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
+                    }
                     return socket.end();
                 } else {
                     socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
@@ -76,9 +83,15 @@ const server = net.createServer((socket) => {
                 const fileContent = dataArray[dataArray.length - 1];
                 const fileName = args.slice('/files/'.length);
                 const filePath = path.resolve(process.argv[3], fileName);
-                fs.writeFileSync(filePath, fileContent);
-                socket.write('HTTP/1.1 201 CREATED' + CRLF + CRLF);
-                socket.end();
+                try {
+                    fs.writeFileSync(filePath, fileContent);
+                    socket.write('HTTP/1.1 201 CREATED' + CRLF + CRLF);
+                    socket.end();
+                } catch (e) {
+                    console.log(e);
+                    socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
+                    socket.end();
+                }
             }
         } else {
             socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
