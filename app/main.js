@@ -89,5 +89,5 @@ const server = net.createServer((socket) => {
     });
 });
 
-server.listen(4221, 'localhost');
 console.log('PROCESS.ARGV: ', process.argv);
+server.listen(4221, 'localhost');
