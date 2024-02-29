@@ -14,7 +14,7 @@ const server = net.createServer((socket) => {
         const userAgent = dataArray[2].split(' ')[1];
 
         if (args.startsWith('/echo/')) {
-            const echoValue = args.slice('/echo/');
+            const echoValue = args.slice('/echo/'.length);
             socket.write('HTTP/1.1 200 OK' + CRLF + 'Content-Type: text/plain' + CRLF + 'Content-Length: ' + echoValue.length + CRLF + CRLF + echoValue);
             return socket.end();
         }
