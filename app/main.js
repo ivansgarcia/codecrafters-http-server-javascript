@@ -12,7 +12,7 @@ const server = net.createServer((socket) => {
         console.log('DATA: ', dataArray);
         const requestType = dataArray[0].split(' ')[0];
         const args = dataArray[0].split(' ')[1];
-        const userAgent = dataArray[2].split(' ')[1];
+        const userAgent = (dataArray.find(data => data.startsWith('User-Agent'))).slice('User-Agent: '.length);
 
         if (requestType == 'GET') {
             if (args.startsWith('/echo/')) {
