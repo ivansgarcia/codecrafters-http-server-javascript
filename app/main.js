@@ -60,7 +60,7 @@ const server = net.createServer((socket) => {
                                 CRLF +
                                 fileContent
                         );
-                    } catch (e) { console.log(e) }
+                    } catch (e) { console.log('ERROR AL ESCRIBIR ARCHIVO: ', e) }
                     return socket.end();
                 } else {
                     socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
@@ -74,7 +74,7 @@ const server = net.createServer((socket) => {
         }
         if (requestType == 'POST') {
             if (args.startsWith('/files/')) {
-                const fileContent = dataArray[6];
+                const fileContent = dataArray[dataArray.length - 1];
                 const fileName = args.slice('/files/'.length);
                 const filePath = path.resolve(process.argv[3], fileName);
                 fs.writeFileSync(filePath, fileContent);
@@ -86,10 +86,10 @@ const server = net.createServer((socket) => {
             socket.write('HTTP/1.1 404 NOT FOUND' + CRLF + CRLF);
         }
     });
-    socket.on('close', () => {
-        socket.end();
-        server.close();
-    });
+    // socket.on('close', () => {
+    //     socket.end();
+    //     server.close();
+    // });
 });
 
 console.log('PROCESS.ARGV: ', process.argv);
