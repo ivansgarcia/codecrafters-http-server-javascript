@@ -12,7 +12,6 @@ const server = net.createServer((socket) => {
         console.log('DATA: ', dataArray);
         const requestType = dataArray[0].split(' ')[0];
         const args = dataArray[0].split(' ')[1];
-        const userAgent = (dataArray.find(data => data.startsWith('User-Agent'))).slice('User-Agent: '.length);
 
         if (requestType == 'GET') {
             if (args.startsWith('/echo/')) {
@@ -31,6 +30,7 @@ const server = net.createServer((socket) => {
                 return socket.end();
             }
             if (args == '/user-agent') {
+                const userAgent = (dataArray.find(data => data.startsWith('User-Agent'))).slice('User-Agent: '.length);
                 socket.write(
                     'HTTP/1.1 200 OK' +
                         CRLF +
